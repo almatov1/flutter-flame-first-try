@@ -26,11 +26,6 @@ class Dashboard extends StatelessWidget {
                         color: Colors.white),
                   ),
                 ),
-                Text(
-                  'Active enemy: ${game.activePoints}',
-                  style: const TextStyle(
-                      fontSize: 24, fontFamily: 'Arcade', color: Colors.white),
-                ),
                 if (game.win)
                   const Text(
                     'Win',
