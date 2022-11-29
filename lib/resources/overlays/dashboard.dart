@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_231122_gae/resources/game.dart';
+import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class Dashboard extends StatelessWidget {
   final JoystickExample game;

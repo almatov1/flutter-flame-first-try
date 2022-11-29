@@ -2,7 +2,7 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flutter_231122_gae/resources/game.dart';
+import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class JoystickPlayer extends SpriteAnimationComponent
     with HasGameRef<JoystickExample>, CollisionCallbacks {

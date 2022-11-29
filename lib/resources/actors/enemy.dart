@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
-import 'package:flutter_231122_gae/resources/game.dart';
+import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class Enemy extends SpriteComponent
     with HasGameRef<JoystickExample>, CollisionCallbacks {

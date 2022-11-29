@@ -4,7 +4,7 @@ import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/actors/enemy.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
-import 'package:flutter_231122_gae/resources/hud/shoot.dart';
+import 'package:flutter_231122_gae/resources/overlays/shoot.dart';
 import 'dart:math';
 
 class JoystickExample extends FlameGame
@@ -24,6 +24,7 @@ class JoystickExample extends FlameGame
   bool win = false;
   ShootButton dialogButton = ShootButton();
   Vector2 lastJoystickRelativeDelta = Vector2(0, -1);
+  late Sprite bullet;
 
   @override
   Future<void> onLoad() async {
@@ -40,6 +41,8 @@ class JoystickExample extends FlameGame
       ..size = Vector2(75, 50);
 
     add(dialogButton);
+
+    bullet = await loadSprite('layers/bullet.png');
 
     final knobPaint = BasicPalette.red.withAlpha(200).paint();
     final backgroundPaint = BasicPalette.purple.withAlpha(100).paint();

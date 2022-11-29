@@ -1,16 +1,16 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_231122_gae/resources/game.dart';
+import 'package:flutter_231122_gae/resources/screens/game.dart';
 
-class Bullet extends CircleComponent with HasGameRef<JoystickExample> {
+class Bullet extends SpriteComponent with HasGameRef<JoystickExample> {
   final double _speed = 450;
   Vector2 direct;
-  Bullet(this.direct, {Vector2? position, double? radius, Paint? paint})
-      : super(position: position, radius: radius, paint: paint);
+  Bullet(this.direct,
+      {Vector2? position, Sprite? sprite, Vector2? size, double? angle})
+      : super(position: position, sprite: sprite, size: size, angle: angle);
 
   @override
-  void onMount() {
+  void onMount() async {
     super.onMount();
 
     final shape = CircleHitbox.relative(
