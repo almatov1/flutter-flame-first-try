@@ -27,7 +27,6 @@ class Enemy extends SpriteComponent
     if (other is JoystickPlayer || other is Bullet) {
       FlameAudio.play('pickup.wav');
       gameRef.point++;
-      gameRef.activePoints--;
       // ignore: invalid_use_of_internal_member
       gameRef.refreshWidget();
       removeFromParent();

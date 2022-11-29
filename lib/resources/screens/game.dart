@@ -19,7 +19,6 @@ class JoystickExample extends FlameGame
   late final JoystickComponent joystick;
   late Timer timer;
   int point = 0;
-  int activePoints = 0;
   late SpriteComponent background;
   bool win = false;
   ShootButton dialogButton = ShootButton();
@@ -70,7 +69,6 @@ class JoystickExample extends FlameGame
           add(Enemy(rng.nextDouble() * background.size.x - 200,
               rng.nextDouble() * background.size.y - 200));
           counter++;
-          activePoints++;
         } else {
           timer.stop();
         }
