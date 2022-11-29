@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_231122_gae/main.dart';
+import 'package:flutter_231122_gae/resources/game.dart';
 
 class Dashboard extends StatelessWidget {
   final JoystickExample game;
@@ -32,9 +32,9 @@ class Dashboard extends StatelessWidget {
                       fontSize: 24, fontFamily: 'Arcade', color: Colors.white),
                 ),
                 if (game.win)
-                  Text(
+                  const Text(
                     'Win',
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontSize: 24,
                         fontFamily: 'Arcade',
                         color: Colors.white),
