@@ -1,4 +1,4 @@
-# flutter_231122_gae
+# flutter-flame-first-try
 
 A new Flutter project.
 
