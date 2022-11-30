@@ -71,8 +71,10 @@ class JoystickExample extends FlameGame
       repeat: true,
       onTick: () {
         if (counter < 100) {
-          add(Enemy(rng.nextDouble() * background.size.x - 200,
-              rng.nextDouble() * background.size.y - 200));
+          add(Enemy(
+              rng.nextInt((background.size.x - 25.0).toInt()).toDouble() + 5.0,
+              rng.nextInt((background.size.y - 25.0).toInt()).toDouble() +
+                  5.0));
           counter++;
         } else {
           timer.stop();
