@@ -20,6 +20,13 @@ class Menu extends StatelessWidget {
           },
           child: const Text('Play'),
         ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const GameCore()));
+          },
+          child: const Text('Settings'),
+        ),
       ])),
     );
   }

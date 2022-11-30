@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class Bullet extends SpriteComponent with HasGameRef<JoystickExample> {
-  final double _speed = 450;
+  final double _speed = 20;
   Vector2 direct;
   Bullet(this.direct,
       {Vector2? position, Sprite? sprite, Vector2? size, double? angle})
@@ -25,7 +25,7 @@ class Bullet extends SpriteComponent with HasGameRef<JoystickExample> {
   @override
   void update(double dt) {
     super.update(dt);
-    position += direct * _speed * dt;
+    position += direct * _speed;
 
     if (position.x <= 0 ||
         position.y <= 0 ||
