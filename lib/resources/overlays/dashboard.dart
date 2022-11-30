@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_231122_gae/resources/screens/game.dart';
+import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Dashboard extends StatelessWidget {
-  final JoystickExample game;
-  const Dashboard({Key? key, required this.game}) : super(key: key);
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +19,18 @@ class Dashboard extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Points: ${game.point} / 100',
-                    style: const TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'Arcade',
-                        color: Colors.white),
+                  child: BlocBuilder<PointBloc, PointState>(
+                    builder: (context, state) {
+                      return Text(
+                        'Points: ${state.point} / 100',
+                        style: const TextStyle(
+                            fontSize: 24,
+                            fontFamily: 'Arcade',
+                            color: Colors.white),
+                      );
+                    },
                   ),
                 ),
-                if (game.win)
-                  const Text(
-                    'Win',
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'Arcade',
-                        color: Colors.white),
-                  ),
               ],
             ),
           ),

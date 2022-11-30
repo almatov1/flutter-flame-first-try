@@ -3,6 +3,7 @@ import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
+import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class Enemy extends SpriteComponent
@@ -26,12 +27,9 @@ class Enemy extends SpriteComponent
     super.onCollision(intersectionPoints, other);
     if (other is JoystickPlayer || other is Bullet) {
       FlameAudio.play('pickup.wav');
-      gameRef.point++;
-      // ignore: invalid_use_of_internal_member
-      gameRef.refreshWidget();
+      gameRef.pointBloc.add(IncreasePointEvent());
       removeFromParent();
-
-      if (gameRef.point == 100) gameRef.win = true;
+      if (gameRef.pointBloc.state.point == 100) gameRef.win = true;
     }
   }
 }

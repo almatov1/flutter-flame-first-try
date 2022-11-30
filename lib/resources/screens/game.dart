@@ -1,9 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
+import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/actors/enemy.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
+import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/overlays/shoot.dart';
 import 'dart:math';
 
@@ -14,6 +16,9 @@ class JoystickExample extends FlameGame
     `CircleComponent`s that serve as the joystick's knob and background.
     Steer the player by using the joystick.
   ''';
+
+  final PointBloc pointBloc;
+  JoystickExample({required this.pointBloc});
 
   late final JoystickPlayer player;
   late final JoystickComponent joystick;
@@ -76,6 +81,8 @@ class JoystickExample extends FlameGame
     );
 
     overlays.add('DashboardOverlay');
+
+    add(FlameBlocProvider.value(value: pointBloc));
   }
 
   @override

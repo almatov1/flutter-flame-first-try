@@ -1,15 +1,32 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/menu.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Flame.device.fullScreen();
   Flame.device.setLandscape();
 
-  runApp(MaterialApp(
-    themeMode: ThemeMode.dark,
-    darkTheme: ThemeData.dark(),
-    home: const Menu(),
-  ));
+  runApp(const FlameApp());
+}
+
+class FlameApp extends StatelessWidget {
+  const FlameApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<PointBloc>(
+          create: (context) => PointBloc(),
+        ),
+      ],
+      child: MaterialApp(
+          themeMode: ThemeMode.dark,
+          darkTheme: ThemeData.dark(),
+          home: const Menu()),
+    );
+  }
 }
