@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "580296772809",
+    "firebase_url": "https://laravel-test-realtime-c9944-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "laravel-test-realtime-c9944",
+    "storage_bucket": "laravel-test-realtime-c9944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580296772809:android:fdccf411dbfd20a08dd118",
+        "android_client_info": {
+          "package_name": "com.example.flutter_231122_gae"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "580296772809-popvms5nqp1s80lelf9r27mbtn94umb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBVpPUEHC67RZwxUlozainT7s7iEKHQx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "580296772809-popvms5nqp1s80lelf9r27mbtn94umb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

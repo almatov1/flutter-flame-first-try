@@ -1,11 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   Flame.device.fullScreen();
   Flame.device.setLandscape();
 

@@ -3,6 +3,7 @@ import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/actors/dragon.dart';
 import 'package:flutter_231122_gae/resources/actors/enemy.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
 import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
@@ -22,6 +23,7 @@ class JoystickExample extends FlameGame
 
   late final JoystickPlayer player;
   late final JoystickComponent joystick;
+  late final Dragon dragon;
   late Timer timer;
   int point = 0;
   late SpriteComponent background;
@@ -62,6 +64,8 @@ class JoystickExample extends FlameGame
 
     camera.followComponent(player,
         worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
+
+    add(Dragon());
 
     int counter = 0;
     var rng = Random();
