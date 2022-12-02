@@ -1,8 +1,10 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flame_bloc/flame_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/actors/dragon.dart';
 import 'package:flutter_231122_gae/resources/actors/enemy.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
@@ -35,6 +37,7 @@ class JoystickExample extends FlameGame
   ShootButton dialogButton = ShootButton();
   Vector2 lastJoystickRelativeDelta = Vector2(0, -1);
   late Sprite bullet;
+  List bulletsOnScene = [];
 
   @override
   Future<void> onLoad() async {
@@ -76,7 +79,7 @@ class JoystickExample extends FlameGame
       1,
       repeat: true,
       onTick: () {
-        if (counter < 100) {
+        if (counter < 10) {
           add(Enemy(
               rng.nextInt((background.size.x - 25.0).toInt()).toDouble() + 5.0,
               rng.nextInt((background.size.y - 25.0).toInt()).toDouble() +
@@ -92,12 +95,42 @@ class JoystickExample extends FlameGame
 
     add(FlameBlocProvider.value(value: pointBloc, children: []));
     add(FlameBlocProvider.value(value: dragonBloc, children: [DragonSprite()]));
+
+    getEnemyBullets();
   }
 
   @override
   void update(double dt) async {
     super.update(dt);
     dragonBloc.add(DragonGetDragonsEvent(1));
+    getEnemyBullets();
     timer.update(dt);
+  }
+
+  getEnemyBullets() {
+    dragonBloc.dbRef.once().then((DatabaseEvent databaseEvent) {
+      var res = databaseEvent.snapshot.value;
+      if (res != null) {
+        Map map = res as Map;
+        if (map['bullets'].runtimeType != String && map['bullets'] != null) {
+          map['bullets'].forEach((key, value) {
+            if (!bulletsOnScene.contains(key)) {
+              Bullet bulletEnemy = Bullet(
+                Vector2(value['directX'], value['directY']),
+                key,
+                position: Vector2(value['x'], value['y']),
+                size: Vector2(30, 15),
+                sprite: bullet,
+                angle: value['angle'],
+              );
+
+              bulletEnemy.anchor = Anchor.center;
+              add(bulletEnemy);
+              bulletsOnScene.add(key);
+            }
+          });
+        }
+      }
+    });
   }
 }

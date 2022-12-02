@@ -1,16 +1,22 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
-class DragonSprite extends SpriteComponent with HasGameRef<JoystickExample> {
+class DragonSprite extends SpriteComponent
+    with HasGameRef<JoystickExample>, CollisionCallbacks {
   @override
   Future<void> onLoad() async {
     sprite = gameRef.actor == 'rocket'
         ? await gameRef.loadSprite('layers/dragon.png')
-        : await gameRef.loadSprite('layers/plane.png');
+        : await gameRef.loadSprite('layers/player.png');
     size = Vector2(50, 50);
-    position = Vector2(0, 0);
+    position = Vector2(150, 150);
     angle = 0;
+    anchor = Anchor.center;
     debugMode = true;
+
+    add(RectangleHitbox());
   }
 
   @override
@@ -32,9 +38,9 @@ class DragonSprite extends SpriteComponent with HasGameRef<JoystickExample> {
 
       angle += gameRef.actor == 'rocket'
           ? (gameRef.dragonBloc.state.dragons.first.dragonAngle - lastAngle) *
-              0.1
+              0.3
           : (gameRef.dragonBloc.state.dragons.first.playerAngle - lastAngle) *
-              0.1;
+              0.3;
 
       position.add(gameRef.actor == 'rocket'
           ? Vector2(gameRef.dragonBloc.state.dragons.first.dragonX - lastX,
@@ -44,11 +50,13 @@ class DragonSprite extends SpriteComponent with HasGameRef<JoystickExample> {
                   gameRef.dragonBloc.state.dragons.first.playerY - lastY) *
               0.1);
     }
+  }
 
-    // Map<String, dynamic> childrenPathValueMap = {};
-
-    // childrenPathValueMap["x"] = map['x'] + rng.nextInt(5) - 1;
-    // childrenPathValueMap["y"] = map['y'] + rng.nextInt(5) - 1;
-    // dbRef.update(childrenPathValueMap);
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if (other is Bullet) {
+      removeFromParent();
+    }
   }
 }

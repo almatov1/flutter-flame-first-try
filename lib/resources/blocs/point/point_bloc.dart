@@ -7,5 +7,9 @@ class PointBloc extends Bloc<PointEvent, PointState> {
     on<IncreasePointEvent>((event, emit) {
       emit(state.copyWith(point: state.point + 1));
     });
+
+    on<MinusPointEvent>((event, emit) {
+      emit(state.copyWith(point: state.point - 1));
+    });
   }
 }

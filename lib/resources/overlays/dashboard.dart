@@ -21,7 +21,7 @@ class Dashboard extends StatelessWidget {
                   child: BlocBuilder<PointBloc, PointState>(
                     builder: (context, state) {
                       return Text(
-                        'Points: ${state.point} / 100',
+                        'Bullets: ${state.point}',
                         style: const TextStyle(
                             fontSize: 24,
                             fontFamily: 'Arcade',

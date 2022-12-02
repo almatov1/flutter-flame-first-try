@@ -7,3 +7,5 @@ abstract class PointEvent {
 }
 
 class IncreasePointEvent extends PointEvent {}
+
+class MinusPointEvent extends PointEvent {}

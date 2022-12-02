@@ -2,10 +2,12 @@ import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
-class Bullet extends SpriteComponent with HasGameRef<JoystickExample> {
-  final double _speed = 20;
+class Bullet extends SpriteComponent
+    with HasGameRef<JoystickExample>, CollisionCallbacks {
+  final double _speed = 30;
   Vector2 direct;
-  Bullet(this.direct,
+  String bulletId;
+  Bullet(this.direct, this.bulletId,
       {Vector2? position, Sprite? sprite, Vector2? size, double? angle})
       : super(position: position, sprite: sprite, size: size, angle: angle);
 
@@ -32,6 +34,8 @@ class Bullet extends SpriteComponent with HasGameRef<JoystickExample> {
         position.x >= gameRef.background.size.x ||
         position.y >= gameRef.background.size.y) {
       removeFromParent();
+      gameRef.dragonBloc.dbRef.child('bullets').child(bulletId).remove();
+      gameRef.bulletsOnScene.remove(bulletId);
     }
   }
 }

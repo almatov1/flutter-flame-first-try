@@ -1,6 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
+import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class JoystickPlayer extends SpriteComponent
@@ -24,11 +25,12 @@ class JoystickPlayer extends SpriteComponent
     // var runData = SpriteAnimationData.sequenced(
     //     amount: 4, stepTime: 0.1, textureSize: Vector2(48, 48));
     // var runImage = await Flame.images.load('layers/plane.png');
-    // animation = SpriteAnimation.fromFrameData(runImage, runData);
+    // animation = SpriteAnimation.fromFrameData(runImage, runData);`
     sprite = gameRef.actor == 'rocket'
         ? await gameRef.loadSprite('layers/player.png')
         : await gameRef.loadSprite('layers/dragon.png');
-    position = gameRef.size / 2;
+    position = Vector2(0, 0);
+    anchor = Anchor.center;
     add(RectangleHitbox());
 
     debugMode = true;
@@ -49,7 +51,7 @@ class JoystickPlayer extends SpriteComponent
       if (!joystick.delta.isZero() && activeCollisions.isEmpty) {
         _lastSize.setFrom(size);
         _lastTransform.setFrom(transform);
-        position.add(joystick.relativeDelta * maxSpeed * dt);
+        position.add(joystick.relativeDelta * dt * maxSpeed);
         angle = joystick.delta.screenAngle();
 
         Map<String, dynamic> childrenPathValueMap = {};
@@ -65,6 +67,14 @@ class JoystickPlayer extends SpriteComponent
 
         gameRef.lastJoystickRelativeDelta = joystick.relativeDelta;
       }
+    }
+  }
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollision(intersectionPoints, other);
+    if (other is Bullet) {
+      removeFromParent();
     }
   }
 }

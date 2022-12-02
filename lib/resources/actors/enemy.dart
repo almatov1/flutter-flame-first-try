@@ -1,7 +1,7 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame_audio/flame_audio.dart';
-import 'package:flutter_231122_gae/resources/actors/bullet.dart';
+import 'package:flutter_231122_gae/resources/actors/dragon.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
 import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
@@ -14,8 +14,9 @@ class Enemy extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite('layers/smoke.gif');
-    size = Vector2(50, 50);
+    sprite = await gameRef.loadSprite('layers/bullet.png');
+    size = Vector2(50, 25);
+    angle = -1.55;
     position = Vector2(enemyX, enemyY);
     add(RectangleHitbox());
 
@@ -25,11 +26,13 @@ class Enemy extends SpriteComponent
   @override
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollision(intersectionPoints, other);
-    if (other is JoystickPlayer || other is Bullet) {
+    if (other is JoystickPlayer) {
       FlameAudio.play('pickup.wav');
       gameRef.pointBloc.add(IncreasePointEvent());
       removeFromParent();
-      if (gameRef.pointBloc.state.point == 100) gameRef.win = true;
+    }
+    if (other is DragonSprite) {
+      removeFromParent();
     }
   }
 }
