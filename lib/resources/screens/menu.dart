@@ -17,9 +17,16 @@ class Menu extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const GameCore()));
+                MaterialPageRoute(builder: (context) => const GameCore(actor: 'rocket')));
           },
-          child: const Text('Play'),
+          child: const Text('Play as Rocket'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const GameCore(actor: 'dragon')));
+          },
+          child: const Text('Play as Dragon'),
         ),
         ElevatedButton(
           onPressed: () {

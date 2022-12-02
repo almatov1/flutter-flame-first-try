@@ -1,10 +1,9 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
-class JoystickPlayer extends SpriteAnimationComponent
+class JoystickPlayer extends SpriteComponent
     with HasGameRef<JoystickExample>, CollisionCallbacks {
   /// Pixels/s
   double maxSpeed = 300.0;
@@ -22,13 +21,17 @@ class JoystickPlayer extends SpriteAnimationComponent
 
   @override
   Future<void> onLoad() async {
-    var runData = SpriteAnimationData.sequenced(
-        amount: 4, stepTime: 0.1, textureSize: Vector2(48, 48));
-    var runImage = await Flame.images.load('layers/plane.png');
-    animation = SpriteAnimation.fromFrameData(runImage, runData);
-    // sprite = await gameRef.loadSprite('layers/player.png');
+    // var runData = SpriteAnimationData.sequenced(
+    //     amount: 4, stepTime: 0.1, textureSize: Vector2(48, 48));
+    // var runImage = await Flame.images.load('layers/plane.png');
+    // animation = SpriteAnimation.fromFrameData(runImage, runData);
+    sprite = gameRef.actor == 'rocket'
+        ? await gameRef.loadSprite('layers/player.png')
+        : await gameRef.loadSprite('layers/dragon.png');
     position = gameRef.size / 2;
     add(RectangleHitbox());
+
+    debugMode = true;
   }
 
   @override
@@ -48,6 +51,17 @@ class JoystickPlayer extends SpriteAnimationComponent
         _lastTransform.setFrom(transform);
         position.add(joystick.relativeDelta * maxSpeed * dt);
         angle = joystick.delta.screenAngle();
+
+        Map<String, dynamic> childrenPathValueMap = {};
+        childrenPathValueMap["x"] = position.x;
+        childrenPathValueMap["y"] = position.y;
+        childrenPathValueMap["angle"] = angle;
+
+        if (gameRef.actor == 'rocket') {
+          gameRef.dragonBloc.dbRef.child('player').update(childrenPathValueMap);
+        } else {
+          gameRef.dragonBloc.dbRef.child('enemy').update(childrenPathValueMap);
+        }
 
         gameRef.lastJoystickRelativeDelta = joystick.relativeDelta;
       }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/actors/dragon.dart';
 import 'package:flutter_231122_gae/resources/actors/enemy.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
+import 'package:flutter_231122_gae/resources/blocs/dragon/dragon_bloc.dart';
 import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/overlays/shoot.dart';
 import 'dart:math';
@@ -19,11 +20,14 @@ class JoystickExample extends FlameGame
   ''';
 
   final PointBloc pointBloc;
-  JoystickExample({required this.pointBloc});
+  final DragonBloc dragonBloc;
+  final String actor;
+  JoystickExample(
+      {required this.pointBloc, required this.dragonBloc, required this.actor});
 
   late final JoystickPlayer player;
   late final JoystickComponent joystick;
-  late final Dragon dragon;
+  late final DragonSprite dragon;
   late Timer timer;
   int point = 0;
   late SpriteComponent background;
@@ -65,8 +69,6 @@ class JoystickExample extends FlameGame
     camera.followComponent(player,
         worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
 
-    add(Dragon());
-
     int counter = 0;
     var rng = Random();
 
@@ -88,13 +90,14 @@ class JoystickExample extends FlameGame
 
     overlays.add('DashboardOverlay');
 
-    add(FlameBlocProvider.value(value: pointBloc));
+    add(FlameBlocProvider.value(value: pointBloc, children: []));
+    add(FlameBlocProvider.value(value: dragonBloc, children: [DragonSprite()]));
   }
 
   @override
   void update(double dt) async {
     super.update(dt);
-
+    dragonBloc.add(DragonGetDragonsEvent(1));
     timer.update(dt);
   }
 }
