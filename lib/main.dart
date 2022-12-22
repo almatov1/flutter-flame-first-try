@@ -1,15 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_231122_gae/resources/blocs/dragon/dragon_bloc.dart';
-import 'package:flutter_231122_gae/resources/blocs/point/point_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/menu.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-Future<void> main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
   Flame.device.fullScreen();
   Flame.device.setLandscape();
 
@@ -21,19 +15,9 @@ class FlameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<PointBloc>(
-          create: (context) => PointBloc(),
-        ),
-        BlocProvider<DragonBloc>(
-          create: (context) => DragonBloc(),
-        ),
-      ],
-      child: MaterialApp(
-          themeMode: ThemeMode.dark,
-          darkTheme: ThemeData.dark(),
-          home: const Menu()),
-    );
+    return MaterialApp(
+        themeMode: ThemeMode.dark,
+        darkTheme: ThemeData.dark(),
+        home: const Menu());
   }
 }

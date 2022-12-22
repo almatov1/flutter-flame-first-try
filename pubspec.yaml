@@ -37,11 +37,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flame: ^1.4.0
-  flame_audio: ^1.3.3
   flutter_bloc: ^8.1.1
   flame_bloc: ^1.8.1
-  firebase_core: ^2.3.0
-  firebase_database: ^10.0.6
 
 dev_dependencies:
   flutter_test:
@@ -72,13 +69,7 @@ flutter:
 
   assets:
     - assets/images/layers/player.png
-    - assets/images/layers/plane.png
-    - assets/images/layers/smoke.gif
     - assets/images/layers/background.jpg
-    - assets/images/layers/button.png
-    - assets/images/layers/bullet.png
-    - assets/images/layers/dragon.png
-    - assets/audio/pickup.wav
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

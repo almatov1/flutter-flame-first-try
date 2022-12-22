@@ -1,7 +1,6 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
-import 'package:flutter_231122_gae/resources/actors/bullet.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
 class JoystickPlayer extends SpriteComponent
@@ -22,13 +21,8 @@ class JoystickPlayer extends SpriteComponent
 
   @override
   Future<void> onLoad() async {
-    // var runData = SpriteAnimationData.sequenced(
-    //     amount: 4, stepTime: 0.1, textureSize: Vector2(48, 48));
-    // var runImage = await Flame.images.load('layers/plane.png');
-    // animation = SpriteAnimation.fromFrameData(runImage, runData);`
-    sprite = gameRef.actor == 'rocket'
-        ? await gameRef.loadSprite('layers/player.png')
-        : await gameRef.loadSprite('layers/dragon.png');
+    sprite = await gameRef.loadSprite('layers/player.png');
+
     position = Vector2(0, 0);
     anchor = Anchor.center;
     add(RectangleHitbox());
@@ -58,23 +52,7 @@ class JoystickPlayer extends SpriteComponent
         childrenPathValueMap["x"] = position.x;
         childrenPathValueMap["y"] = position.y;
         childrenPathValueMap["angle"] = angle;
-
-        if (gameRef.actor == 'rocket') {
-          gameRef.dragonBloc.dbRef.child('player').update(childrenPathValueMap);
-        } else {
-          gameRef.dragonBloc.dbRef.child('enemy').update(childrenPathValueMap);
-        }
-
-        gameRef.lastJoystickRelativeDelta = joystick.relativeDelta;
       }
-    }
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    if (other is Bullet) {
-      removeFromParent();
     }
   }
 }

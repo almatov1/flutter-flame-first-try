@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/core.dart';
-import 'package:flutter_231122_gae/resources/screens/settings.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
@@ -17,23 +16,9 @@ class Menu extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const GameCore(actor: 'rocket')));
+                MaterialPageRoute(builder: (context) => const GameCore()));
           },
-          child: const Text('Play as Rocket'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const GameCore(actor: 'dragon')));
-          },
-          child: const Text('Play as Dragon'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const Settings()));
-          },
-          child: const Text('Settings'),
+          child: const Text('Play'),
         ),
       ])),
     );
