@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/blocs/socket/socketvar_bloc.dart';
 import 'package:flutter_231122_gae/resources/core.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 class Menu extends StatefulWidget {
@@ -10,14 +12,12 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  @override
-  void initState() {
-    super.initState();
-
+  fetchServer() {
     // TEST SOCKET
     var socket = io(
-        'http://localhost:3000?serverToken=r43xv43vi&userName=aza',
+        'http://37.151.200.143:3000?serverToken=r43xv43vi&userName=aza',
         OptionBuilder()
+            .setTransports(['websocket'])
             .enableForceNewConnection()
             .disableAutoConnect()
             .build());
@@ -32,10 +32,17 @@ class _MenuState extends State<Menu> {
     socket.on('connectResult', (data) {
       if (data == true) {
         print('succes connected');
+
+        BlocProvider.of<SocketVarBloc>(context).add(SocketVarSetEvent(socket));
+
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const GameCore()));
       } else {
         print('error: $data');
       }
     });
+
+    socket.on('usersList', (data) => print(data));
   }
 
   @override
@@ -49,10 +56,9 @@ class _MenuState extends State<Menu> {
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const GameCore()));
+            fetchServer();
           },
-          child: const Text('Play'),
+          child: const Text('Connect to server'),
         ),
       ])),
     );

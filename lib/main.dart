@@ -1,6 +1,9 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/blocs/socket/socketvar_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/menu.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,9 +18,16 @@ class FlameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        themeMode: ThemeMode.dark,
-        darkTheme: ThemeData.dark(),
-        home: const Menu());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SocketVarBloc>(
+          create: (context) => SocketVarBloc(),
+        ),
+      ],
+      child: MaterialApp(
+          themeMode: ThemeMode.dark,
+          darkTheme: ThemeData.dark(),
+          home: const Menu()),
+    );
   }
 }

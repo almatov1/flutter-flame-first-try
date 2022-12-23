@@ -3,14 +3,13 @@ import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
+import 'package:flutter_231122_gae/resources/blocs/socket/socketvar_bloc.dart';
 
 class JoystickExample extends FlameGame
     with HasDraggables, HasCollisionDetection, HasTappables {
-  static const String description = '''
-    In this example we showcase how to use the joystick by creating simple
-    `CircleComponent`s that serve as the joystick's knob and background.
-    Steer the player by using the joystick.
-  ''';
+  final SocketVarBloc socketBloc;
+
+  JoystickExample({required this.socketBloc});
 
   late final JoystickPlayer player;
   late final JoystickComponent joystick;
@@ -38,5 +37,7 @@ class JoystickExample extends FlameGame
 
     camera.followComponent(player,
         worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
+
+    socketBloc.state.socket!.emit('commandFromClient', 'Hello server!');
   }
 }
