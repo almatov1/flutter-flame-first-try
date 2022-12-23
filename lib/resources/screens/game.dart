@@ -2,18 +2,21 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame/palette.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/actors/enemies.dart';
 import 'package:flutter_231122_gae/resources/actors/player.dart';
-import 'package:flutter_231122_gae/resources/blocs/socket/socketvar_bloc.dart';
+import 'package:flutter_231122_gae/resources/blocs/players/players_bloc.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 
-class JoystickExample extends FlameGame
+class Online2DGame extends FlameGame
     with HasDraggables, HasCollisionDetection, HasTappables {
-  final SocketVarBloc socketBloc;
+  final Socket socket;
+  final PlayersBloc playersBloc;
+  Online2DGame({required this.socket, required this.playersBloc});
 
-  JoystickExample({required this.socketBloc});
-
-  late final JoystickPlayer player;
+  late final MainPlayer player;
   late final JoystickComponent joystick;
   late SpriteComponent background;
+  List playersInGame = [];
 
   @override
   Future<void> onLoad() async {
@@ -30,14 +33,24 @@ class JoystickExample extends FlameGame
       background: CircleComponent(radius: 50, paint: backgroundPaint),
       margin: const EdgeInsets.only(left: 40, bottom: 40),
     );
-    player = JoystickPlayer(joystick, background.size.x, background.size.y);
+    player = MainPlayer(joystick, background.size.x, background.size.y);
 
     add(player);
     add(joystick);
 
     camera.followComponent(player,
         worldBounds: Rect.fromLTRB(0, 0, background.size.x, background.size.y));
+  }
 
-    socketBloc.state.socket!.emit('commandFromClient', 'Hello server!');
+  @override
+  void update(double dt) async {
+    super.update(dt);
+    playersBloc.state.players?.forEach((element) {
+      if (!playersInGame.contains(element['id'])) {
+        playersInGame.add(element['id']);
+        add(Enemy(id: element['id']));
+      }
+    });
   }
 }
+

@@ -15,7 +15,7 @@ class _MenuState extends State<Menu> {
   fetchServer() {
     // TEST SOCKET
     var socket = io(
-        'http://37.151.200.143:3000?serverToken=r43xv43vi&userName=aza',
+        'http://37.151.200.143:3000?serverToken=r43xv43vi&userName=almat',
         OptionBuilder()
             .setTransports(['websocket'])
             .enableForceNewConnection()
@@ -42,7 +42,9 @@ class _MenuState extends State<Menu> {
       }
     });
 
-    socket.on('usersList', (data) => print(data));
+    // socket.on('usersList', (data) {
+    //   BlocProvider.of<PlayersBloc>(context).add(PlayersSetEvent(data));
+    // });
   }
 
   @override

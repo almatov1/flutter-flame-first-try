@@ -3,9 +3,8 @@ import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flutter_231122_gae/resources/screens/game.dart';
 
-class JoystickPlayer extends SpriteComponent
-    with HasGameRef<JoystickExample>, CollisionCallbacks {
-  /// Pixels/s
+class MainPlayer extends PositionComponent
+    with HasGameRef<Online2DGame>, CollisionCallbacks {
   double maxSpeed = 300.0;
   late final Vector2 _lastSize = size.clone();
   late final Transform2D _lastTransform = transform.clone();
@@ -16,13 +15,11 @@ class JoystickPlayer extends SpriteComponent
   late SpriteComponent playerSprite;
   late SpriteAnimationComponent player;
 
-  JoystickPlayer(this.joystick, this.backgroundX, this.backgroundY)
+  MainPlayer(this.joystick, this.backgroundX, this.backgroundY)
       : super(size: Vector2.all(50.0), anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {
-    sprite = await gameRef.loadSprite('layers/player.png');
-
     position = Vector2(0, 0);
     anchor = Anchor.center;
     add(RectangleHitbox());
@@ -48,10 +45,7 @@ class JoystickPlayer extends SpriteComponent
         position.add(joystick.relativeDelta * dt * maxSpeed);
         angle = joystick.delta.screenAngle();
 
-        Map<String, dynamic> childrenPathValueMap = {};
-        childrenPathValueMap["x"] = position.x;
-        childrenPathValueMap["y"] = position.y;
-        childrenPathValueMap["angle"] = angle;
+        gameRef.socket.emit('updatePosition', [position.x, position.y]);
       }
     }
   }

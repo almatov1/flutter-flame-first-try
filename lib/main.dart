@@ -1,9 +1,9 @@
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_231122_gae/resources/blocs/players/players_bloc.dart';
 import 'package:flutter_231122_gae/resources/blocs/socket/socketvar_bloc.dart';
 import 'package:flutter_231122_gae/resources/screens/menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +22,9 @@ class FlameApp extends StatelessWidget {
       providers: [
         BlocProvider<SocketVarBloc>(
           create: (context) => SocketVarBloc(),
+        ),
+        BlocProvider<PlayersBloc>(
+          create: (context) => PlayersBloc(),
         ),
       ],
       child: MaterialApp(
